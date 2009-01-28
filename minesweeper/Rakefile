@@ -1,0 +1,13 @@
+require "synthesis/task"
+
+Synthesis::Task.new('synthesis') do |t|
+  t.adapter = :rspec
+  t.pattern = 'spec/*_spec.rb'
+end
+
+Synthesis::Task.new('synthesis:graph') do |t|
+  t.adapter = :rspec
+  t.pattern = 'spec/*_spec.rb'
+  t.formatter = :dot
+  t.formatter_out = 'synthesis.dot'
+end
