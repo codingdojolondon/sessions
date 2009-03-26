@@ -12,21 +12,26 @@ public class Field {
 		for (int i = 0; i < rows; i++) {
 			Cell[] row = new Cell[cols];
 			for (int j = 0; j < cols; j++) {
-				row[j] = new Cell(i, j, false);
+				row[j] = new Cell( false);
 			}
 			grid[i] = row;
 		}
 	}
 
-	public Cell cellAt(int row, int column) {
+	private Cell cellAt(int row, int column) {
 		return grid[row][column];
 	}
 
 	public void placeBombAt(int row, int column) {
-		grid[row][column] = new Cell(row, column, true);
+		grid[row][column] = new Cell( true);
+		Set<Cell> neighbours = getNeighboursAt(row,column);
+		for (Cell cell : neighbours) {
+            cell.increaseNumberOfBombs();
+        }
+		
 	}
 
-	public Set<Cell> getNeighboursAt(int row, int col) {
+	private Set<Cell> getNeighboursAt(int row, int col) {
 		Set<Cell> result = new HashSet<Cell>();
 		for (int rowIndex = Math.max(0, row - 1); rowIndex <= Math.min(row + 1,
 				getHeight() - 1); rowIndex++) {
@@ -68,13 +73,20 @@ public class Field {
 		return result;
 	}
 
-	public int getNumberOfAdjacentBombsAt(int row, int col) {
-		int result = 0;
-		for (Cell cell : getNeighboursAt(row, col)) {
-			if (cell.isBomb()) {
-				result++;
-			}
-		}
-		return result;
-	}
+    int getBombCount() {
+        int result = 0;
+        for (Cell[] row : grid) {
+            for (Cell cell : row) {
+                if(cell.isBomb())
+                    result++;
+            }
+        }
+        return result;
+    }
+
+    public int getAdjacentBombs(int i, int j) {
+        // TODO Auto-generated method stub
+        return this.grid[i][j].getAdjacentBombs();
+    }
+
 }
