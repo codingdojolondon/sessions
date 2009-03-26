@@ -1,12 +1,14 @@
 package org.minesweeper;
 
-public class Cell {
+public final class Cell {
 	private final int row;
 	private final int column;
+	private final boolean isBomb;
 
-	public Cell(int row, int column) {
+	public Cell(int row, int column, boolean isBomb) {
 		this.row = row;
 		this.column = column;
+		this.isBomb = isBomb;
 	}
 
 	public int getRow() {
@@ -17,9 +19,10 @@ public class Cell {
 		return column;
 	}
 
+	
 	@Override
 	public String toString() {
-		return "[" + row + "," + column + "]";
+		return isBomb?"*":".";
 	}
 
 	@Override
@@ -27,6 +30,7 @@ public class Cell {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + column;
+		result = prime * result + (isBomb ? 1231 : 1237);
 		result = prime * result + row;
 		return result;
 	}
@@ -39,12 +43,20 @@ public class Cell {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cell other = (Cell) obj;
+		final Cell other = (Cell) obj;
 		if (column != other.column)
+			return false;
+		if (isBomb != other.isBomb)
 			return false;
 		if (row != other.row)
 			return false;
 		return true;
 	}
+
+	public boolean isBomb() {
+		return isBomb;
+	} 
+	
+	
 
 }
