@@ -26,4 +26,13 @@ class Card
   def compare(car)
     
   end
+    
+  def <=>(card)
+    rank <=> card.rank
+  end
+  
+  def ==(card)
+    rank == card.rank && suit == card.suit
+  end
+  
 end

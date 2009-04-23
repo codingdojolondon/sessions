@@ -1,4 +1,3 @@
-require 'spec'
 
 require 'lib/card'
 
@@ -31,6 +30,10 @@ describe Card do
     Card.new('2D').suit.should == :diamonds
     Card.new('2C').suit.should == :clubs
     Card.new('2S').suit.should == :spades
+  end
+  
+  it 'should sort cards' do
+    [Card.new('7H'), Card.new('5C')].sort.should == [Card.new('5C'), Card.new('7H')]
   end
   
 end
